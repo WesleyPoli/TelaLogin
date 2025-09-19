@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: login_postgres
+    environment:
+      POSTGRES_DB: login_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - login_network
+
+  app:
+    build: .
+    container_name: login_app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@postgres:5432/login_db
+      - SECRET_KEY=your-secret-key-here-change-in-production
+      - DEBUG=True
+    depends_on:
+      - postgres
+    networks:
+      - login_network
+
+volumes:
+  postgres_data:
+
+networks:
+  login_network:
+    driver: bridge
