@@ -2,6 +2,8 @@
 
 Equipe:
 Daniel Henrique Braga da Silva - 14565431
+
+
 Wesley Oliveira Cunha - 14612367
 
 ## Execução
